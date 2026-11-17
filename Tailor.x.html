@@ -1,0 +1,2980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailor.x — Your Style. Your Tailor. Your Fit.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #FDFBF7;
+            --surface-color: #FFFFFF;
+            --surface-alt: #F4EFE6;
+            --text-main: #1A1A1A;
+            --text-muted: #666666;
+            --primary: #C5A880;
+            --primary-hover: #B3956D;
+            --accent-dark: #121A2B;
+            --border-color: #E2DDD5;
+            --danger: #D9534F;
+            --success: #5CB85C;
+            --shadow-sm: 0 4px 12px rgba(0,0,0,0.03);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.06);
+            --shadow-lg: 0 16px 40px rgba(0,0,0,0.1);
+            --radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, h4, .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Navbar */
+        header {
+            position: sticky;
+            top: 0;
+            background: rgba(253, 251, 247, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-dark);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5px;
+            cursor: pointer;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--accent-dark);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #25334d;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-gold {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-gold:hover {
+            background: var(--primary-hover);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* Location Bar Banner */
+        .location-bar {
+            background: var(--surface-alt);
+            padding: 0.6rem 2rem;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .location-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Main View Controller */
+        main {
+            flex: 1;
+        }
+
+        .view-section {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+            padding: 2rem 0;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            padding: 4rem 0;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            line-height: 1.15;
+            color: var(--accent-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-content p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .hero-image-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .hero-img-card {
+            border-radius: var(--radius);
+            overflow: hidden;
+            height: 240px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .hero-img-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .hero-img-card:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Common Heading Styles */
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--accent-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Grids and Cards */
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--surface-color);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary);
+        }
+
+        /* Tailor Card */
+        .tailor-card {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tailor-img-container {
+            height: 200px;
+            position: relative;
+        }
+
+        .tailor-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .demo-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .fav-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: white;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            color: #ccc;
+            transition: var(--transition);
+        }
+
+        .fav-btn.active {
+            color: var(--danger);
+        }
+
+        .tailor-details {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex: 1;
+        }
+
+        .tailor-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-dark);
+        }
+
+        .tailor-shop {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .tailor-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            margin: 0.5rem 0;
+        }
+
+        .rating {
+            background: var(--surface-alt);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            color: var(--accent-dark);
+        }
+
+        .rating i {
+            color: #f59e0b;
+        }
+
+        .tailor-specs {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .tailor-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* How it works */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+        }
+
+        .step-card {
+            background: var(--surface-color);
+            padding: 2rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            text-align: center;
+            position: relative;
+        }
+
+        .step-num {
+            width: 45px;
+            height: 45px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin: 0 auto 1.5rem auto;
+            font-size: 1.1rem;
+        }
+
+        /* Location Grid Cards */
+        .location-card {
+            background: var(--surface-color);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .location-card:hover {
+            border-color: var(--primary);
+            background: var(--surface-alt);
+        }
+
+        /* Clothing Cards */
+        .clothing-card {
+            position: relative;
+            height: 300px;
+            border-radius: var(--radius);
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .clothing-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .clothing-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .clothing-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 1.5rem;
+            color: white;
+        }
+
+        /* Modals */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 1rem;
+        }
+
+        .modal-container {
+            background: var(--surface-color);
+            width: 100%;
+            max-width: 600px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2.5rem;
+            position: relative;
+            animation: modalIn 0.3s ease-out;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        /* Forms & Inputs */
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-dark);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 0.95rem;
+            background: var(--bg-color);
+            color: var(--text-main);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary);
+            background: var(--surface-color);
+        }
+
+        /* Clothes Designer Area */
+        .designer-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            align-items: start;
+        }
+
+        .preview-canvas {
+            background: var(--surface-alt);
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius);
+            height: 450px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .preview-garment {
+            width: 220px;
+            height: 320px;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        /* Dashboard Styles */
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            min-height: 70vh;
+        }
+
+        .dashboard-sidebar {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            height: fit-content;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .sidebar-menu a {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: var(--surface-alt);
+            color: var(--primary);
+        }
+
+        .dashboard-content {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 2rem;
+        }
+
+        /* Tables & Lists */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        th {
+            font-weight: 600;
+            color: var(--accent-dark);
+            background: var(--surface-alt);
+        }
+
+        /* Timeline Tracking */
+        .tracking-timeline {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin: 3rem 0;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+
+        .tracking-timeline::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 5%;
+            right: 5%;
+            height: 3px;
+            background: var(--border-color);
+            z-index: 1;
+        }
+
+        .timeline-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .timeline-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--surface-color);
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .timeline-step.completed .timeline-circle {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .timeline-step.active .timeline-circle {
+            background: var(--accent-dark);
+            border-color: var(--accent-dark);
+            color: white;
+            box-shadow: 0 0 0 4px rgba(18, 26, 43, 0.15);
+        }
+
+        .timeline-step span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .timeline-step.active span, .timeline-step.completed span {
+            color: var(--accent-dark);
+            font-weight: 600;
+        }
+
+        /* Chat box */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 450px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            background: var(--surface-color);
+            overflow: hidden;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            background: var(--bg-color);
+        }
+
+        .chat-msg {
+            max-width: 70%;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .chat-msg.customer {
+            background: var(--accent-dark);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
+        .chat-msg.tailor {
+            background: var(--surface-alt);
+            color: var(--text-main);
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+            border: 1px solid var(--border-color);
+        }
+
+        .chat-input-area {
+            display: flex;
+            padding: 1rem;
+            border-top: 1px solid var(--border-color);
+            background: var(--surface-color);
+            gap: 0.75rem;
+        }
+
+        /* Toast Notifications */
+        #toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background: var(--accent-dark);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            animation: toastIn 0.3s ease, toastOut 0.3s ease 2.7s forwards;
+        }
+
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes toastOut {
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(50px); }
+        }
+
+        /* Footer */
+        footer {
+            background: var(--accent-dark);
+            color: white;
+            padding: 4rem 0 2rem 0;
+            margin-top: auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1.2rem;
+            color: var(--primary);
+        }
+
+        .footer-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer-col a {
+            color: #b0b8c4;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .footer-col a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #8a94a6;
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .designer-layout {
+                grid-template-columns: 1fr;
+            }
+            .dashboard-layout {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--surface-color);
+                padding: 1.5rem;
+                border-bottom: 1px solid var(--border-color);
+                box-shadow: var(--shadow-md);
+            }
+            .nav-links.mobile-open {
+                display: flex;
+            }
+            .hamburger {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="location-bar">
+            <div class="location-selector" onclick="openLocationModal()">
+                <i class="fa-solid fa-location-dot" style="color: var(--primary);"></i>
+                <span id="current-location-display">Lucknow, Hazratganj</span>
+                <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem;"></i>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <span style="font-size: 0.8rem; color: var(--text-muted);">✨ Startup Demo Prototype</span>
+                <span id="notification-bell-btn" style="cursor: pointer; position: relative;" onclick="toggleNotifications()">
+                    <i class="fa-regular fa-bell"></i>
+                    <span id="notif-badge" style="position: absolute; top:-5px; right:-5px; background:var(--danger); color:white; border-radius:50%; width:16px; height:16px; font-size:10px; display:flex; align-items:center; justify-content:center; display:none;">0</span>
+                </span>
+            </div>
+        </div>
+        <div class="nav-container">
+            <a class="logo" onclick="switchView('home')">Tailor<span>.x</span></a>
+            <ul class="nav-links" id="nav-links-menu">
+                <li><a onclick="switchView('home')" class="nav-home active">Home</a></li>
+                <li><a onclick="switchView('find-tailor')" class="nav-find-tailor">Find Tailor</a></li>
+                <li><a onclick="switchView('designer')" class="nav-designer">Design Clothes</a></li>
+                <li><a onclick="switchView('prices')" class="nav-prices">Prices</a></li>
+                <li><a onclick="switchView('orders')" class="nav-orders">My Orders</a></li>
+                <li><a onclick="switchView('about')" class="nav-about">About</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="btn btn-outline" id="tailor-portal-btn" onclick="openTailorLoginModal()">Tailor Partner</button>
+                <button class="btn btn-primary" id="auth-btn" onclick="openLoginModal()">Login / Signup</button>
+            </div>
+            <div class="hamburger" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dynamic Content Views -->
+    <main>
+
+        <!-- 1. HOME VIEW -->
+        <section id="view-home" class="view-section active">
+            <div class="container">
+                <div class="hero">
+                    <div class="hero-content">
+                        <span style="background: var(--surface-alt); padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; color: var(--primary); display: inline-block; margin-bottom: 1rem;">✨ Lucknow's Premier Fashion-Tech Platform</span>
+                        <h1>Your Style.<br>Your Tailor.<br>Your Fit.</h1>
+                        <p>“Find trusted local tailors, customize your clothes and get the perfect fit right from your home.”</p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-gold" onclick="switchView('find-tailor')"><i class="fa-solid fa-scissors"></i> Find a Tailor</button>
+                            <button class="btn btn-outline" onclick="switchView('designer')"><i class="fa-solid fa-shirt"></i> Design Your Clothes</button>
+                        </div>
+                    </div>
+                    <div class="hero-image-grid">
+                        <div class="hero-img-card"><img src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&q=80&w=600" alt="Tailor tailoring"></div>
+                        <div class="hero-img-card"><img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&q=80&w=600" alt="Suit fitting"></div>
+                        <div class="hero-img-card"><img src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?auto=format&fit=crop&q=80&w=600" alt="Ethnic Kurta"></div>
+                        <div class="hero-img-card"><img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=600" alt="Fabric measure"></div>
+                    </div>
+                </div>
+
+                <!-- Popular Tailors Section -->
+                <div style="margin: 4rem 0;">
+                    <div class="section-header">
+                        <h2>Popular Lucknow Tailors</h2>
+                        <p>Handpicked experienced masters of bespoke tailoring</p>
+                    </div>
+                    <div class="grid-4" id="popular-tailors-grid"></div>
+                </div>
+
+                <!-- Popular Clothing Categories -->
+                <div style="margin: 4rem 0;">
+                    <div class="section-header">
+                        <h2>Popular Clothing & Designs</h2>
+                        <p>Get custom stitched garments designed by professionals</p>
+                    </div>
+                    <div class="grid-4" id="popular-clothing-grid"></div>
+                </div>
+
+                <!-- How Tailor.x Works -->
+                <div style="margin: 4rem 0; background: var(--surface-alt); padding: 4rem 2rem; border-radius: var(--radius);">
+                    <div class="section-header">
+                        <h2>How Tailor.x Works</h2>
+                        <p>Seamless bespoke tailoring in 4 simple steps</p>
+                    </div>
+                    <div class="steps-grid">
+                        <div class="step-card">
+                            <div class="step-num">1</div>
+                            <h4 style="margin-bottom:0.5rem">Select Tailor</h4>
+                            <p style="font-size:0.85rem; color:var(--text-muted)">Browse verified local tailors by ratings, specialization & prices.</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-num">2</div>
+                            <h4 style="margin-bottom:0.5rem">Design & Measure</h4>
+                            <p style="font-size:0.85rem; color:var(--text-muted)">Customize your design online or request a home measurement visit.</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-num">3</div>
+                            <h4 style="margin-bottom:0.5rem">Stitch & Track</h4>
+                            <p style="font-size:0.85rem; color:var(--text-muted)">Track every status update from cutting to delivery in real time.</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-num">4</div>
+                            <h4 style="margin-bottom:0.5rem">Perfect Fit</h4>
+                            <p style="font-size:0.85rem; color:var(--text-muted)">Receive your custom garment with our guaranteed fitting warranty.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Popular Lucknow Locations -->
+                <div style="margin: 4rem 0;">
+                    <div class="section-header">
+                        <h2>Popular Lucknow Locations</h2>
+                        <p>Tailors available across all major localities</p>
+                    </div>
+                    <div class="grid-4" id="lucknow-areas-grid" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));"></div>
+                </div>
+
+                <!-- Customer Reviews -->
+                <div style="margin: 4rem 0;">
+                    <div class="section-header">
+                        <h2>Customer Reviews</h2>
+                        <p>Hear from our satisfied patrons in Lucknow</p>
+                    </div>
+                    <div class="grid-4" id="home-reviews-grid"></div>
+                </div>
+
+                <!-- Become a Tailor Banner -->
+                <div style="background: var(--accent-dark); color: white; padding: 3rem; border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
+                    <div>
+                        <h3 style="font-size: 2rem; margin-bottom: 0.5rem;">Are you a Master Tailor or Boutique Owner?</h3>
+                        <p style="color: #b0b8c4; font-size: 1rem;">Join Tailor.x partner network to digitize your shop and receive high-paying orders.</p>
+                    </div>
+                    <button class="btn btn-gold" onclick="openTailorLoginModal()">Register as Tailor Partner</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. FIND TAILOR VIEW -->
+        <section id="view-find-tailor" class="view-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Find Your Perfect Tailor</h2>
+                    <p>Search trusted tailors in Lucknow filtered by style, price and rating</p>
+                </div>
+                
+                <div style="background: var(--surface-color); padding: 1.5rem; border-radius: var(--radius); border: 1px solid var(--border-color); display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                    <div>
+                        <label>Search Tailor / Shop / Style</label>
+                        <input type="text" id="filter-search" placeholder="e.g. Kurta, Hazratganj..." oninput="filterTailors()">
+                    </div>
+                    <div>
+                        <label>Select Area in Lucknow</label>
+                        <select id="filter-area" onchange="filterTailors()">
+                            <option value="">All Areas</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Clothing Specialization</label>
+                        <select id="filter-category" onchange="filterTailors()">
+                            <option value="">All Categories</option>
+                            <option value="Men">Men</option>
+                            <option value="Women">Women</option>
+                            <option value="Kids">Kids</option>
+                            <option value="Suit">Suit / Blazer</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Home Visit Available</label>
+                        <select id="filter-homevisit" onchange="filterTailors()">
+                            <option value="">Any</option>
+                            <option value="yes">Home Visit Available</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid-4" id="tailors-directory-grid"></div>
+            </div>
+        </section>
+
+        <!-- 3. DESIGNER VIEW -->
+        <section id="view-designer" class="view-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Interactive Clothes Designer</h2>
+                    <p>Design your custom garment live and send it directly to your tailor</p>
+                </div>
+
+                <div class="designer-layout">
+                    <div class="preview-canvas">
+                        <div style="position: absolute; top: 15px; left: 15px; font-size: 0.85rem; font-weight: 600; color: var(--text-muted);">
+                            <i class="fa-solid fa-eye"></i> LIVE PREVIEW
+                        </div>
+                        <div class="preview-garment" id="garment-preview-box">
+                            <i class="fa-solid fa-shirt" id="preview-icon" style="font-size: 4rem; color: #121A2B; margin-bottom: 1rem;"></i>
+                            <h4 id="preview-title" style="color: #121A2B;">Kurta Preview</h4>
+                            <p id="preview-desc" style="font-size: 0.75rem; text-align: center; color: #555; margin-top: 0.5rem;">Classic Fit • Standard Collar</p>
+                        </div>
+                        <div style="position: absolute; bottom: 15px; right: 15px;">
+                            <label class="btn btn-outline" style="background: white; font-size: 0.8rem; padding: 0.4rem 0.8rem; cursor: pointer;">
+                                <i class="fa-solid fa-image"></i> Upload Reference <input type="file" id="ref-img-upload" style="display: none;" onchange="handleImageUpload(event)">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--surface-color); padding: 2rem; border-radius: var(--radius); border: 1px solid var(--border-color);">
+                        <h3 style="margin-bottom: 1.5rem; font-size: 1.3rem;">Garment Configuration</h3>
+                        
+                        <div class="form-group">
+                            <label>Select Garment Type</label>
+                            <select id="designer-garment" onchange="updateGarmentPreview()">
+                                <option value="Kurta">Kurta</option>
+                                <option value="Shirt">Shirt</option>
+                                <option value="Pant">Pant</option>
+                                <option value="Suit">Suit</option>
+                                <option value="Blazer">Blazer</option>
+                                <option value="Salwar Suit">Salwar Suit</option>
+                                <option value="Lehenga">Lehenga</option>
+                                <option value="Blouse">Blouse</option>
+                                <option value="Kids Wear">Kids Wear</option>
+                            </select>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Fabric Type</label>
+                                <select id="designer-fabric" onchange="updateGarmentPreview()">
+                                    <option value="Fine Cotton">Fine Cotton</option>
+                                    <option value="Pure Silk">Pure Silk</option>
+                                    <option value="Linen">Linen</option>
+                                    <option value="Velvet">Velvet</option>
+                                    <option value="Brocade">Brocade</option>
+                                    <option value="Georgette">Georgette</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Primary Color</label>
+                                <select id="designer-color" onchange="updateGarmentPreview()">
+                                    <option value="#FDFBF7">Cream White</option>
+                                    <option value="#1A1A1A">Midnight Black</option>
+                                    <option value="#121A2B">Navy Blue</option>
+                                    <option value="#800020">Royal Maroon</option>
+                                    <option value="#C5A880">Champagne Gold</option>
+                                    <option value="#2E8B57">Emerald Green</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Collar / Neck Style</label>
+                                <select id="designer-collar" onchange="updateGarmentPreview()">
+                                    <option value="Mandarin Collar">Mandarin Collar</option>
+                                    <option value="Spread Collar">Spread Collar</option>
+                                    <option value="Boat Neck">Boat Neck</option>
+                                    <option value="V-Neck">V-Neck</option>
+                                    <option value="Round Neck">Round Neck</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Sleeve Style</label>
+                                <select id="designer-sleeve" onchange="updateGarmentPreview()">
+                                    <option value="Full Sleeve">Full Sleeve</option>
+                                    <option value="Half Sleeve">Half Sleeve</option>
+                                    <option value="Three-Quarter">Three-Quarter</option>
+                                    <option value="Cuff Sleeves">Cuff Sleeves</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Fit Type</label>
+                                <select id="designer-fit">
+                                    <option value="Tailored Slim Fit">Tailored Slim Fit</option>
+                                    <option value="Classic Regular Fit">Classic Regular Fit</option>
+                                    <option value="Relaxed Fit">Relaxed Fit</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Additional Pockets / Detailing</label>
+                                <select id="designer-pocket">
+                                    <option value="Single Welt Pocket">Single Welt Pocket</option>
+                                    <option value="Dual Patch Pockets">Dual Patch Pockets</option>
+                                    <option value="No Pockets">No Pockets</option>
+                                    <option value="Embroidery Detailing">Embroidery Detailing</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                            <button class="btn btn-outline" style="flex: 1;" onclick="saveCurrentDesign()"><i class="fa-solid fa-bookmark"></i> Save Design</button>
+                            <button class="btn btn-primary" style="flex: 1;" onclick="proceedToBookingWithDesign()"><i class="fa-solid fa-scissors"></i> Book Tailor with Design</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. PRICES & COMPARISON VIEW -->
+        <section id="view-prices" class="view-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Transparent Tailoring Price Comparison</h2>
+                    <p>Compare stitching rates across multiple verified Lucknow tailors</p>
+                </div>
+
+                <div style="background: var(--surface-color); padding: 2rem; border-radius: var(--radius); border: 1px solid var(--border-color); margin-bottom: 2rem;">
+                    <div style="display: flex; gap: 1.5rem; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap;">
+                        <div>
+                            <label>Select Garment to Compare</label>
+                            <select id="compare-garment-select" onchange="renderPriceComparisonTable()" style="width: 250px;">
+                                <option value="Kurta">Kurta</option>
+                                <option value="Shirt">Shirt</option>
+                                <option value="Pant">Pant</option>
+                                <option value="Suit">Suit</option>
+                                <option value="Lehenga">Lehenga</option>
+                                <option value="Blouse">Blouse</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div style="overflow-x: auto;">
+                        <table id="price-comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Tailor & Shop</th>
+                                    <th>Specialization</th>
+                                    <th>Stitching Price</th>
+                                    <th>Rating</th>
+                                    <th>Home Visit</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="price-comparison-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. MY ORDERS VIEW -->
+        <section id="view-orders" class="view-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>My Orders & Tracking</h2>
+                    <p>Monitor your active bespoke tailoring orders and history</p>
+                </div>
+                <div id="orders-list-container"></div>
+            </div>
+        </section>
+
+        <!-- 6. ABOUT VIEW -->
+        <section id="view-about" class="view-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>About Tailor.x</h2>
+                    <p>Redefining traditional tailoring through modern tech and convenience</p>
+                </div>
+                <div style="background: var(--surface-color); padding: 3rem; border-radius: var(--radius); border: 1px solid var(--border-color); max-width: 900px; margin: 0 auto; line-height: 1.8;">
+                    <h3 style="color: var(--accent-dark); margin-bottom: 1rem;">“Your Style. Your Tailor. Your Fit.”</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Tailor.x is an advanced online platform connecting customers with trusted local master tailors in Lucknow. We eliminate the hassle of multiple store visits by bringing home measurement services, live 3D-inspired garment customisation, transparent price comparisons, and end-to-end order tracking right to your fingertips.</p>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; text-align: center;">
+                        <div>
+                            <h2 style="color: var(--primary);">50+</h2>
+                            <p style="font-size: 0.9rem; color: var(--text-muted);">Verified Master Tailors</p>
+                        </div>
+                        <div>
+                            <h2 style="color: var(--primary);">1,200+</h2>
+                            <p style="font-size: 0.9rem; color: var(--text-muted);">Perfect Fits Delivered</p>
+                        </div>
+                        <div>
+                            <h2 style="color: var(--primary);">15+</h2>
+                            <p style="font-size: 0.9rem; color: var(--text-muted);">Lucknow Localities</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. CUSTOMER DASHBOARD VIEW -->
+        <section id="view-customer-dashboard" class="view-section">
+            <div class="container">
+                <div class="dashboard-layout">
+                    <div class="dashboard-sidebar">
+                        <div style="text-align: center; margin-bottom: 1.5rem;">
+                            <div style="width: 80px; height: 80px; background: var(--surface-alt); border-radius: 50%; margin: 0 auto 1rem auto; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--primary); border: 2px solid var(--border-color);" id="dash-avatar-placeholder">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <h4 id="dash-cust-name" style="color: var(--accent-dark);">Customer Name</h4>
+                            <p id="dash-cust-phone" style="font-size: 0.8rem; color: var(--text-muted);">+91 9876543210</p>
+                        </div>
+                        <ul class="sidebar-menu">
+                            <li><a onclick="switchCustTab('profile')" class="cust-tab-link active" id="tab-link-profile"><i class="fa-solid fa-user-gear"></i> Profile Settings</a></li>
+                            <li><a onclick="switchCustTab('measurements')" class="cust-tab-link" id="tab-link-measurements"><i class="fa-solid fa-ruler"></i> My Measurements</a></li>
+                            <li><a onclick="switchCustTab('designs')" class="cust-tab-link" id="tab-link-designs"><i class="fa-solid fa-shirt"></i> Saved Designs</a></li>
+                            <li><a onclick="switchCustTab('favorites')" class="cust-tab-link" id="tab-link-favorites"><i class="fa-solid fa-heart"></i> Favourite Tailors</a></li>
+                            <li><a onclick="switchCustTab('orders')" class="cust-tab-link" id="tab-link-orders"><i class="fa-solid fa-box"></i> My Orders</a></li>
+                            <li><a onclick="logoutCustomer()" style="color: var(--danger);"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                    <div class="dashboard-content" id="customer-dashboard-main-area"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. TAILOR DASHBOARD VIEW -->
+        <section id="view-tailor-dashboard" class="view-section">
+            <div class="container">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <div>
+                        <h2 id="tailor-dash-shopname">Tailor Dashboard</h2>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;" id="tailor-dash-subtitle">Manage your orders, price list and appointments</p>
+                    </div>
+                    <button class="btn btn-outline" onclick="logoutTailor()"><i class="fa-solid fa-right-from-bracket"></i> Logout Tailor</button>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+                    <div class="card" style="padding: 1.5rem;">
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">Total Orders</p>
+                        <h3 style="font-size: 1.8rem; color: var(--accent-dark);" id="tdash-stat-orders">0</h3>
+                    </div>
+                    <div class="card" style="padding: 1.5rem;">
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">Active Appointments</p>
+                        <h3 style="font-size: 1.8rem; color: var(--accent-dark);" id="tdash-stat-appointments">0</h3>
+                    </div>
+                    <div class="card" style="padding: 1.5rem;">
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">Total Earnings (Demo)</p>
+                        <h3 style="font-size: 1.8rem; color: var(--primary);" id="tdash-stat-earnings">₹0</h3>
+                    </div>
+                    <div class="card" style="padding: 1.5rem;">
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">Average Rating</p>
+                        <h3 style="font-size: 1.8rem; color: var(--accent-dark);" id="tdash-stat-rating">4.9 ★</h3>
+                    </div>
+                </div>
+
+                <div style="background: var(--surface-color); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 2rem; margin-bottom: 2rem;">
+                    <h3 style="margin-bottom: 1.5rem;">Incoming & Active Orders</h3>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Garment & Design</th>
+                                    <th>Amount</th>
+                                    <th>Current Status</th>
+                                    <th>Actions (Update Status)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tailor-dashboard-orders-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div style="background: var(--surface-color); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 2rem;">
+                    <h3 style="margin-bottom: 1.5rem;">Manage Your Stitching Price List</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Update your base rates for various clothing types visible to customers.</p>
+                    <div id="tailor-pricelist-editor"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. ADMIN DASHBOARD VIEW -->
+        <section id="view-admin-dashboard" class="view-section">
+            <div class="container">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <div>
+                        <h2>Tailor.x Admin Control Center</h2>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Platform governance and partner management</p>
+                    </div>
+                    <button class="btn btn-outline" onclick="switchView('home')">Exit Admin</button>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+                    <div class="card" style="padding: 1.5rem;">
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">Total Customers</p>
+                        <h3 style="font-size: 1.8rem; color: var(--accent-dark);" id="adash-customers">1,240</h3>
+                    </div>
+                    <div class="card" style="padding: 1.5rem;">
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">Total Tailors</p>
+                        <h3 style="font-size: 1.8rem; color: var(--accent-dark);" id="adash-tailors">10</h3>
+                    </div>
+                    <div class="card" style="padding: 1.5rem;">
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">Total Orders</p>
+                        <h3 style="font-size: 1.8rem; color: var(--accent-dark);" id="adash-orders">312</h3>
+                    </div>
+                    <div class="card" style="padding: 1.5rem;">
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">Platform Revenue</p>
+                        <h3 style="font-size: 1.8rem; color: var(--primary);" id="adash-revenue">₹1,48,500</h3>
+                    </div>
+                </div>
+
+                <div style="background: var(--surface-color); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 2rem;">
+                    <h3 style="margin-bottom: 1.5rem;">Manage Platform Tailor Partners</h3>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tailor Name</th>
+                                    <th>Shop Name</th>
+                                    <th>Area</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-tailors-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3 class="logo" style="color: white; margin-bottom: 1rem;" onclick="switchView('home')">Tailor<span>.x</span></h3>
+                    <p style="color: #b0b8c4; font-size: 0.9rem; line-height: 1.5;">“Your Style. Your Tailor. Your Fit.”<br>Lucknow’s premier fashion-tech platform connecting you with elite local master tailors.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a onclick="switchView('home')">Home</a></li>
+                        <li><a onclick="switchView('find-tailor')">Find Tailor</a></li>
+                        <li><a onclick="switchView('designer')">Design Clothes</a></li>
+                        <li><a onclick="switchView('prices')">Price Comparison</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Lucknow Localities</h4>
+                    <ul>
+                        <li><a onclick="selectAreaFromHome('Hazratganj')">Hazratganj</a></li>
+                        <li><a onclick="selectAreaFromHome('Gomti Nagar')">Gomti Nagar</a></li>
+                        <li><a onclick="selectAreaFromHome('Indira Nagar')">Indira Nagar</a></li>
+                        <li><a onclick="selectAreaFromHome('Aliganj')">Aliganj & Chowk</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Future Cities (Coming Soon)</h4>
+                    <ul>
+                        <li><span style="color:#666">Kanpur</span></li>
+                        <li><span style="color:#666">Varanasi</span></li>
+                        <li><span style="color:#666">Prayagraj</span></li>
+                        <li><span style="color:#666">Delhi & Noida</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Tailor.x Technologies. Built as a B.Tech Fashion-Tech Prototype.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <!-- MODALS -->
+
+    <!-- Location Modal -->
+    <div class="modal-overlay" id="location-modal">
+        <div class="modal-container" style="max-width: 500px;">
+            <button class="modal-close" onclick="closeModal('location-modal')"><i class="fa-solid fa-xmark"></i></button>
+            <h3 style="margin-bottom: 0.5rem;">Select Your Location</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">Tailor.x is currently active in Lucknow.</p>
+            
+            <label style="font-weight:600; margin-bottom:0.5rem">City</label>
+            <select id="modal-city-select" style="margin-bottom: 1.5rem;" onchange="onCityChangeModal()">
+                <option value="Lucknow">Lucknow (Active)</option>
+                <option value="Kanpur">Kanpur (Coming Soon)</option>
+                <option value="Varanasi">Varanasi (Coming Soon)</option>
+                <option value="Delhi">Delhi & Noida (Coming Soon)</option>
+            </select>
+
+            <label style="font-weight:600; margin-bottom:0.5rem">Select Area in Lucknow</label>
+            <div class="grid-4" id="modal-areas-grid" style="grid-template-columns: repeat(2, 1fr); gap: 0.75rem; max-height: 250px; overflow-y: auto; margin-bottom: 1.5rem;"></div>
+            <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="confirmLocationModal()">Confirm Location</button>
+        </div>
+    </div>
+
+    <!-- Customer Login / Signup Modal -->
+    <div class="modal-overlay" id="login-modal">
+        <div class="modal-container">
+            <button class="modal-close" onclick="closeModal('login-modal')"><i class="fa-solid fa-xmark"></i></button>
+            <h3 style="margin-bottom: 0.5rem;" id="login-modal-title">Customer Portal</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;" id="login-modal-subtitle">Login or create your Tailor.x account</p>
+            
+            <form id="customer-auth-form" onsubmit="handleCustomerLogin(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="auth-name" required placeholder="Aarav Sharma">
+                    </div>
+                    <div class="form-group">
+                        <label>Mobile Number</label>
+                        <input type="tel" id="auth-mobile" required placeholder="9876543210">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="auth-email" required placeholder="aarav@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Password (Demo)</label>
+                        <input type="password" id="auth-pass" required placeholder="••••••••">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>City</label>
+                        <input type="text" id="auth-city" value="Lucknow" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Area / Locality</label>
+                        <select id="auth-area"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Full Street Address</label>
+                    <textarea id="auth-address" rows="2" placeholder="House No, Society, Landmark"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;">Login / Save Profile</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tailor Login Modal -->
+    <div class="modal-overlay" id="tailor-login-modal">
+        <div class="modal-container" style="max-width: 450px;">
+            <button class="modal-close" onclick="closeModal('tailor-login-modal')"><i class="fa-solid fa-xmark"></i></button>
+            <h3 style="margin-bottom: 0.5rem;">Tailor Partner Portal</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">Select your demo tailor shop to login</p>
+            
+            <div class="form-group">
+                <label>Select Demo Tailor Shop</label>
+                <select id="tailor-select-dropdown" style="margin-bottom: 1.5rem;"></select>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="loginAsTailor()">Access Tailor Dashboard</button>
+        </div>
+    </div>
+
+    <!-- Tailor Profile & Booking Modal -->
+    <div class="modal-overlay" id="tailor-profile-modal">
+        <div class="modal-container" style="max-width: 800px;">
+            <button class="modal-close" onclick="closeModal('tailor-profile-modal')"><i class="fa-solid fa-xmark"></i></button>
+            <div id="tailor-profile-modal-content"></div>
+        </div>
+    </div>
+
+    <!-- Booking Flow Modal -->
+    <div class="modal-overlay" id="booking-modal">
+        <div class="modal-container" style="max-width: 700px;">
+            <button class="modal-close" onclick="closeModal('booking-modal')"><i class="fa-solid fa-xmark"></i></button>
+            <h3 style="margin-bottom: 0.5rem;" id="booking-modal-title">Book Tailor & Custom Stitching</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;" id="booking-modal-subtitle">Complete your custom appointment step-by-step</p>
+            <div id="booking-steps-container"></div>
+        </div>
+    </div>
+
+    <!-- Chat Modal -->
+    <div class="modal-overlay" id="chat-modal">
+        <div class="modal-container" style="max-width: 600px; padding: 1.5rem;">
+            <button class="modal-close" onclick="closeModal('chat-modal')"><i class="fa-solid fa-xmark"></i></button>
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
+                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--surface-alt); display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--primary);" id="chat-avatar-letter">T</div>
+                <div>
+                    <h4 id="chat-tailor-name">Tailor Name</h4>
+                    <span style="font-size: 0.75rem; color: var(--success);"><i class="fa-solid fa-circle" style="font-size: 6px;"></i> Demo Chat Active</span>
+                </div>
+            </div>
+            
+            <div class="chat-container">
+                <div class="chat-messages" id="chat-messages-box"></div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input-field" placeholder="Type message e.g. Please make sleeves slightly longer..." onkeypress="if(event.key==='Enter') sendChatMessage()">
+                    <button class="btn btn-primary" onclick="sendChatMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Review Modal -->
+    <div class="modal-overlay" id="review-modal">
+        <div class="modal-container" style="max-width: 450px;">
+            <button class="modal-close" onclick="closeModal('review-modal')"><i class="fa-solid fa-xmark"></i></button>
+            <h3 style="margin-bottom: 0.5rem;">Rate & Review Tailor</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">Share your experience for completed order #<span id="review-order-id"></span></p>
+            
+            <div class="form-group" style="text-align: center; margin-bottom: 1.5rem;">
+                <div id="star-rating-picker" style="font-size: 2rem; color: #f59e0b; cursor: pointer; display: flex; justify-content: center; gap: 0.5rem;">
+                    <i class="fa-solid fa-star" onclick="setRatingStars(1)"></i>
+                    <i class="fa-solid fa-star" onclick="setRatingStars(2)"></i>
+                    <i class="fa-solid fa-star" onclick="setRatingStars(3)"></i>
+                    <i class="fa-solid fa-star" onclick="setRatingStars(4)"></i>
+                    <i class="fa-solid fa-star" onclick="setRatingStars(5)"></i>
+                </div>
+                <input type="hidden" id="selected-star-count" value="5">
+            </div>
+
+            <div class="form-group">
+                <label>Your Review Note</label>
+                <textarea id="review-text-input" rows="3" placeholder="Amazing fit and delivered right on time! Highly recommended..."></textarea>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="submitCustomerReview()">Submit Review</button>
+        </div>
+    </div>
+
+    <!-- Notifications Modal -->
+    <div class="modal-overlay" id="notifications-modal">
+        <div class="modal-container" style="max-width: 450px;">
+            <button class="modal-close" onclick="closeModal('notifications-modal')"><i class="fa-solid fa-xmark"></i></button>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <h3 style="margin: 0;"><i class="fa-regular fa-bell"></i> Notifications</h3>
+                <button class="btn btn-outline" style="font-size: 0.75rem; padding: 0.3rem 0.6rem;" onclick="clearAllNotifications()">Clear All</button>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">Recent order status updates & appointments</p>
+            <div id="notifications-list-box" style="display: flex; flex-direction: column; gap: 0.75rem; max-height: 350px; overflow-y: auto;"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        const lucknowAreas = [
+            "Hazratganj", "Gomti Nagar", "Indira Nagar", "Aliganj", "Aminabad",
+            "Chowk", "Charbagh", "Mahanagar", "Alambagh", "Rajajipuram",
+            "Vikas Nagar", "Jankipuram", "Ashiyana", "Krishna Nagar", "Faizabad Road", "Sitapur Road", "Sultanpur Road"
+        ];
+
+        let demoTailors = [
+            {
+                id: "t1",
+                name: "Master Rahmat Ali",
+                shopName: "Ali Royal Bespoke Tailors",
+                area: "Hazratganj",
+                distance: "1.2 km away",
+                rating: 4.9,
+                reviewsCount: 128,
+                completedOrders: 450,
+                specialization: "Men's Suits, Sherwani & Designer Kurtas",
+                startingPrice: 450,
+                homeVisit: true,
+                phone: "+91 9839112233",
+                photo: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=600",
+                prices: { "Kurta": 500, "Shirt": 400, "Pant": 450, "Suit": 1800, "Blazer": 1500, "Lehenga": 2500, "Blouse": 600 },
+                bio: "Over 25 years of master craftsmanship in Hazratganj. Specializing in bespoke wedding sherwanis and executive suits."
+            },
+            {
+                id: "t2",
+                name: "Suman & Priya",
+                shopName: "Priya Boutique & Ladies Tailoring",
+                area: "Gomti Nagar",
+                distance: "2.5 km away",
+                rating: 4.8,
+                reviewsCount: 94,
+                completedOrders: 380,
+                specialization: "Bridal Lehenga, Salwar Suits & Designer Blouses",
+                startingPrice: 600,
+                homeVisit: true,
+                phone: "+91 9415055667",
+                photo: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&q=80&w=600",
+                prices: { "Kurta": 550, "Salwar Suit": 900, "Lehenga": 2200, "Blouse": 700, "Shirt": 450, "Pant": 500, "Suit": 1600 },
+                bio: "Trendsetting ladies boutique in Gomti Nagar. Expert in intricate embroidery and custom bridal wear."
+            },
+            {
+                id: "t3",
+                name: "Mohd. Aslam",
+                shopName: "Aslam Master Tailors",
+                area: "Aminabad",
+                distance: "4.1 km away",
+                rating: 4.7,
+                reviewsCount: 210,
+                completedOrders: 920,
+                specialization: "Traditional Lucknowi Chikankari Kurtas & Suits",
+                startingPrice: 350,
+                homeVisit: false,
+                phone: "+91 9838223344",
+                photo: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&q=80&w=600",
+                prices: { "Kurta": 350, "Shirt": 350, "Pant": 400, "Suit": 1400, "Blazer": 1200, "Lehenga": 1800, "Blouse": 500 },
+                bio: "Legendary tailoring hub in Aminabad market. Famous for precision fitting and rapid turnaround."
+            },
+            {
+                id: "t4",
+                name: "Anil Kumar Verma",
+                shopName: "Verma Gent's & Ladies Wear",
+                area: "Indira Nagar",
+                distance: "3.0 km away",
+                rating: 4.6,
+                reviewsCount: 76,
+                completedOrders: 290,
+                specialization: "Formal Shirts, Trousers & Blazers",
+                startingPrice: 400,
+                homeVisit: true,
+                phone: "+91 9792011122",
+                photo: "https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?auto=format&fit=crop&q=80&w=600",
+                prices: { "Kurta": 450, "Shirt": 400, "Pant": 450, "Suit": 1500, "Blazer": 1300, "Lehenga": 2000, "Blouse": 550 },
+                bio: "Modern cuts and perfect corporate fits in Indira Nagar."
+            },
+            {
+                id: "t5",
+                name: "Bano Begum",
+                shopName: "Bano Designer Studio",
+                area: "Aliganj",
+                distance: "2.2 km away",
+                rating: 4.9,
+                reviewsCount: 112,
+                completedOrders: 410,
+                specialization: "Designer Suits, Kurtis & Kids Ethnic",
+                startingPrice: 500,
+                homeVisit: true,
+                phone: "+91 9140334455",
+                photo: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&q=80&w=600",
+                prices: { "Kurta": 500, "Salwar Suit": 850, "Lehenga": 2400, "Blouse": 650, "Shirt": 450, "Pant": 450, "Suit": 1700 },
+                bio: "Exclusive ladies styling studio trusted by families across Aliganj."
+            },
+            {
+                id: "t6",
+                name: "Santosh Sharma",
+                shopName: "Sharma Master Tailors",
+                area: "Chowk",
+                distance: "5.5 km away",
+                rating: 4.5,
+                reviewsCount: 88,
+                completedOrders: 540,
+                specialization: "Classic Kurta Pajama & Bandhgala",
+                startingPrice: 350,
+                homeVisit: false,
+                phone: "+91 9839556677",
+                photo: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=600",
+                prices: { "Kurta": 400, "Shirt": 350, "Pant": 400, "Suit": 1400, "Blazer": 1200, "Lehenga": 1900, "Blouse": 500 },
+                bio: "Traditional craftsmanship rooted in Old Lucknow Chowk."
+            },
+            {
+                id: "t7",
+                name: "Deepak & Rahul",
+                shopName: "Smart Fit Tailoring Hub",
+                area: "Alambagh",
+                distance: "6.0 km away",
+                rating: 4.7,
+                reviewsCount: 65,
+                completedOrders: 230,
+                specialization: "Casual Wear, Denims & Custom Shirts",
+                startingPrice: 380,
+                homeVisit: true,
+                phone: "+91 9235667788",
+                photo: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&q=80&w=600",
+                prices: { "Kurta": 450, "Shirt": 380, "Pant": 420, "Suit": 1500, "Blazer": 1300, "Lehenga": 2000, "Blouse": 550 },
+                bio: "Fast turnaround custom tailoring near Alambagh bus station."
+            },
+            {
+                id: "t8",
+                name: "Zafar Khan",
+                shopName: "Khan Bespoke & Sherwani House",
+                area: "Vikas Nagar",
+                distance: "3.8 km away",
+                rating: 4.8,
+                reviewsCount: 142,
+                completedOrders: 510,
+                specialization: "Groom Sherwani, Tuxedo & Indo-Western",
+                startingPrice: 550,
+                homeVisit: true,
+                phone: "+91 9889223311",
+                photo: "https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?auto=format&fit=crop&q=80&w=600",
+                prices: { "Kurta": 600, "Shirt": 450, "Pant": 500, "Suit": 2000, "Blazer": 1600, "Lehenga": 2800, "Blouse": 750 },
+                bio: "Luxury bespoke tailoring for weddings and elite corporate events."
+            }
+        ];
+
+        let popularClothing = [
+            { name: "Executive Suit", price: "₹1,500 onwards", img: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&q=80&w=500" },
+            { name: "Designer Kurta", price: "₹400 onwards", img: "https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?auto=format&fit=crop&q=80&w=500" },
+            { name: "Bridal Lehenga", price: "₹2,000 onwards", img: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&q=80&w=500" },
+            { name: "Formal Shirt & Pant", price: "₹750 onwards", img: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=500" }
+        ];
+
+        let homeReviews = [
+            { name: "Aarav Sharma", area: "Hazratganj", text: "Master Rahmat Ali stitched my wedding sherwani with immaculate precision. The home visit made it so convenient!", rating: 5 },
+            { name: "Priyanka Sen", area: "Gomti Nagar", text: "Priya Boutique delivered my designer lehenga right on schedule. The fit was absolute perfection.", rating: 5 },
+            { name: "Manish Rastogi", area: "Indira Nagar", text: "Superb price comparison and tracking! Tailor.x is a game changer for bespoke tailoring in Lucknow.", rating: 5 }
+        ];
+
+        /* STORAGE HELPERS */
+        function getStorage(key, fallback) {
+            try {
+                const val = localStorage.getItem('tailorx_' + key);
+                return val ? JSON.parse(val) : fallback;
+            } catch (e) {
+                console.error("Storage read error for key:", key, e);
+                return fallback;
+            }
+        }
+        function setStorage(key, data) {
+            try {
+                localStorage.setItem('tailorx_' + key, JSON.stringify(data));
+            } catch (e) {
+                console.error("Storage write error for key:", key, e);
+            }
+        }
+
+        // Initialize default storage states if empty
+        if (!localStorage.getItem('tailorx_current_city')) {
+            setStorage('current_city', "Lucknow");
+            setStorage('current_area', "Hazratganj");
+        }
+        if (!localStorage.getItem('tailorx_tailors_data')) {
+            setStorage('tailorx_tailors_data', demoTailors);
+        }
+        if (!localStorage.getItem('tailorx_measurements')) {
+            setStorage('measurements', [
+                { profileName: "Myself", chest: 40, waist: 34, shoulder: 18, sleeve: 25, shirtLen: 30, kurtaLen: 42, pantLen: 40, neck: 15.5, hip: 41 },
+                { profileName: "Father", chest: 42, waist: 36, shoulder: 19, sleeve: 26, shirtLen: 31, kurtaLen: 44, pantLen: 41, neck: 16.0, hip: 43 }
+            ]);
+        }
+        if (!localStorage.getItem('tailorx_orders')) {
+            setStorage('orders', [
+                {
+                    id: "TX1001",
+                    tailorId: "t1",
+                    tailorName: "Master Rahmat Ali",
+                    shopName: "Ali Royal Bespoke Tailors",
+                    clothing: "Kurta",
+                    design: { fabric: "Fine Cotton", color: "#C5A880", collar: "Mandarin Collar", sleeve: "Full Sleeve" },
+                    measurementProfile: "Myself",
+                    visitType: "Home Visit",
+                    date: "2026-03-20",
+                    time: "11:00 AM",
+                    address: "Flat 402, Hazratganj Towers, Lucknow",
+                    totalAmount: 900,
+                    statusIndex: 4,
+                    statusName: "Stitching",
+                    createdAt: "2026-03-18",
+                    reviewGiven: false
+                }
+            ]);
+        }
+        if (!localStorage.getItem('tailorx_notifications')) {
+            setStorage('notifications', [
+                { text: "🔔 Tailor accepted your order #TX1001.", time: "Today, 10:30 AM", read: false },
+                { text: "🔔 Your order is now in stitching.", time: "Today, 02:15 PM", read: false }
+            ]);
+        }
+        if (!localStorage.getItem('tailorx_favorites')) {
+            setStorage('favorites', ["t1", "t2"]);
+        }
+        if (!localStorage.getItem('tailorx_designs')) {
+            setStorage('designs', [
+                { id: "d1", title: "Royal Wedding Kurta", garment: "Kurta", fabric: "Pure Silk", color: "#C5A880", collar: "Mandarin Collar", sleeve: "Full Sleeve", fit: "Tailored Slim Fit" }
+            ]);
+        }
+        if (!localStorage.getItem('tailorx_chats')) {
+            setStorage('chats', {
+                "TX1001": [
+                    { sender: "customer", text: "Please make the sleeves slightly longer by 1 inch." },
+                    { sender: "tailor", text: "Sure Aarav ji, we will update the measurement and note it down." }
+                ]
+            });
+        }
+
+        let activeView = 'home';
+        let activeBookingData = {};
+        let activeChatOrderOrTailorId = null;
+        let activeReviewOrderId = null;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initApp();
+        });
+
+        function initApp() {
+            updateLocationDisplay();
+            renderHomeContent();
+            renderTailorsDirectory();
+            renderLucknowAreasGrid();
+            renderPriceComparisonTable();
+            renderCustomerOrders();
+            updateAuthNavButton();
+            updateNotificationBadge();
+            populateModalAreaDropdowns();
+        }
+
+        /* NAVIGATION & UI */
+        function switchView(viewId) {
+            document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+            const target = document.getElementById('view-' + viewId);
+            if (target) {
+                target.classList.add('active');
+                activeView = viewId;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+            const activeNav = document.querySelector('.nav-' + viewId);
+            if (activeNav) activeNav.classList.add('active');
+
+            if (viewId === 'orders') renderCustomerOrders();
+            if (viewId === 'prices') renderPriceComparisonTable();
+            if (viewId === 'customer-dashboard') renderCustomerDashboardTab('profile');
+            if (viewId === 'tailor-dashboard') initTailorDashboard();
+            if (viewId === 'admin-dashboard') initAdminDashboard();
+
+            const mobileMenu = document.getElementById('nav-links-menu');
+            if (mobileMenu) mobileMenu.classList.remove('mobile-open');
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('nav-links-menu');
+            if (menu) menu.classList.toggle('mobile-open');
+        }
+
+        function updateLocationDisplay() {
+            const city = getStorage('current_city', 'Lucknow');
+            const area = getStorage('current_area', 'Hazratganj');
+            const el = document.getElementById('current-location-display');
+            if (el) el.innerText = `${city}, ${area}`;
+        }
+
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check" style="color:var(--primary);"></i> <span>${escapeHTML(message)}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function escapeHTML(str) {
+            if (!str) return '';
+            return str.toString().replace(/[&<>'"]/g, tag => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+            }[tag] || tag));
+        }
+
+        /* MODAL CONTROLLER */
+        function openModal(modalId) {
+            const m = document.getElementById(modalId);
+            if (m) m.style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            const m = document.getElementById(modalId);
+            if (m) m.style.display = 'none';
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay').forEach(modal => modal.style.display = 'none');
+            }
+        });
+
+        /* LOCATION SYSTEM */
+        function openLocationModal() {
+            const grid = document.getElementById('modal-areas-grid');
+            if (grid) {
+                grid.innerHTML = lucknowAreas.map(a => `
+                    <div class="location-card" onclick="selectModalArea('${a}')" style="padding:0.75rem; font-size:0.9rem;">
+                        ${escapeHTML(a)}
+                    </div>
+                `).join('');
+            }
+            openModal('location-modal');
+        }
+
+        let tempSelectedArea = "Hazratganj";
+        function selectModalArea(area) {
+            tempSelectedArea = area;
+            showToast(`Selected area: ${area}`);
+        }
+
+        function confirmLocationModal() {
+            setStorage('current_area', tempSelectedArea);
+            updateLocationDisplay();
+            closeModal('location-modal');
+            showToast(`Location updated to ${tempSelectedArea}, Lucknow`);
+            filterTailors();
+        }
+
+        function onCityChangeModal() {
+            const city = document.getElementById('modal-city-select').value;
+            if (city !== 'Lucknow') {
+                showToast(city + " is coming soon! Currently active in Lucknow.");
+            }
+        }
+
+        function selectAreaFromHome(area) {
+            setStorage('current_area', area);
+            updateLocationDisplay();
+            showToast(`Location updated to ${area}, Lucknow`);
+            switchView('find-tailor');
+            const fa = document.getElementById('filter-area');
+            if (fa) fa.value = area;
+            filterTailors();
+        }
+
+        function populateModalAreaDropdowns() {
+            const authArea = document.getElementById('auth-area');
+            if (authArea) {
+                authArea.innerHTML = lucknowAreas.map(a => `<option value="${a}">${a}</option>`).join('');
+            }
+        }
+
+        /* HOME CONTENT RENDERERS */
+        function renderHomeContent() {
+            const tailors = getStorage('tailorx_tailors_data', demoTailors);
+            const popTailorsGrid = document.getElementById('popular-tailors-grid');
+            if (popTailorsGrid) {
+                popTailorsGrid.innerHTML = tailors.slice(0, 4).map(t => createTailorCardHTML(t)).join('');
+            }
+
+            const popClothGrid = document.getElementById('popular-clothing-grid');
+            if (popClothGrid) {
+                popClothGrid.innerHTML = popularClothing.map(c => `
+                    <div class="clothing-card" onclick="switchView('designer')">
+                        <img src="${c.img}" alt="${escapeHTML(c.name)}">
+                        <div class="clothing-overlay">
+                            <h4>${escapeHTML(c.name)}</h4>
+                            <p style="font-size:0.85rem; color:var(--primary)">${escapeHTML(c.price)}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            const homeRevGrid = document.getElementById('home-reviews-grid');
+            if (homeRevGrid) {
+                homeRevGrid.innerHTML = homeReviews.map(r => `
+                    <div class="card" style="padding: 1.5rem; display:flex; flex-direction:column; gap:0.75rem;">
+                        <div style="color: #f59e0b; font-size: 0.9rem;">★★★★★</div>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); font-style: italic;">"${escapeHTML(r.text)}"</p>
+                        <div style="margin-top:auto; font-size:0.85rem; font-weight:600;">${escapeHTML(r.name)} <span style="font-weight:400; color:var(--text-muted)">(${escapeHTML(r.area)})</span></div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function renderLucknowAreasGrid() {
+            const grid = document.getElementById('lucknow-areas-grid');
+            if (grid) {
+                grid.innerHTML = lucknowAreas.map(area => `
+                    <div class="location-card" onclick="selectAreaFromHome('${area}')">
+                        <i class="fa-solid fa-location-crosshairs" style="color:var(--primary); font-size:1.2rem; margin-bottom:0.5rem"></i>
+                        <h4 style="font-size:0.95rem;">${escapeHTML(area)}</h4>
+                        <span style="font-size:0.75rem; color:var(--text-muted)">Active Tailors</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function createTailorCardHTML(t) {
+            const favorites = getStorage('favorites', []);
+            const isFav = favorites.includes(t.id);
+            return `
+                <div class="card tailor-card">
+                    <div class="tailor-img-container">
+                        <img src="${escapeHTML(t.photo)}" alt="${escapeHTML(t.name)}">
+                        <span class="demo-badge">Demo Profile</span>
+                        <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite('${t.id}')">
+                            <i class="fa-solid fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="tailor-details">
+                        <div class="tailor-name">${escapeHTML(t.name)}</div>
+                        <div class="tailor-shop">${escapeHTML(t.shopName)}</div>
+                        <div class="tailor-specs"><i class="fa-solid fa-scissors" style="color:var(--primary)"></i> ${escapeHTML(t.specialization)}</div>
+                        <div class="tailor-meta">
+                            <span class="rating"><i class="fa-solid fa-star"></i> ${t.rating} (${t.reviewsCount})</span>
+                            <span style="font-size:0.8rem; color:var(--text-muted);"><i class="fa-solid fa-location-dot"></i> ${escapeHTML(t.area)} (${escapeHTML(t.distance)})</span>
+                        </div>
+                        <div style="font-size:0.85rem; font-weight:600; color:var(--accent-dark);">Starting ₹${t.startingPrice} <span style="font-size:0.75rem; font-weight:400; color:var(--text-muted)">| Home Visit: ${t.homeVisit ? 'Yes' : 'No'}</span></div>
+                        <div class="tailor-actions">
+                            <button class="btn btn-outline" style="font-size:0.8rem; padding:0.4rem; justify-content:center;" onclick="openTailorProfile('${t.id}')">View Profile</button>
+                            <button class="btn btn-primary" style="font-size:0.8rem; padding:0.4rem; justify-content:center;" onclick="openBookingModalForTailor('${t.id}')">Book Tailor</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        /* TAILOR DIRECTORY & FILTERS */
+        function renderTailorsDirectory() {
+            const areaSelect = document.getElementById('filter-area');
+            if (areaSelect) {
+                areaSelect.innerHTML = `<option value="">All Areas</option>` + lucknowAreas.map(a => `<option value="${a}">${a}</option>`).join('');
+            }
+            const tailors = getStorage('tailorx_tailors_data', demoTailors);
+            const grid = document.getElementById('tailors-directory-grid');
+            if (grid) {
+                grid.innerHTML = tailors.map(t => createTailorCardHTML(t)).join('');
+            }
+        }
+
+        function filterTailors() {
+            const searchEl = document.getElementById('filter-search');
+            const areaEl = document.getElementById('filter-area');
+            const catEl = document.getElementById('filter-category');
+            const hvEl = document.getElementById('filter-homevisit');
+
+            const search = searchEl ? searchEl.value.toLowerCase() : '';
+            const area = areaEl ? areaEl.value : '';
+            const category = catEl ? catEl.value : '';
+            const homevisit = hvEl ? hvEl.value : '';
+
+            const tailors = getStorage('tailorx_tailors_data', demoTailors);
+            const filtered = tailors.filter(t => {
+                const matchSearch = t.name.toLowerCase().includes(search) || t.shopName.toLowerCase().includes(search) || t.specialization.toLowerCase().includes(search) || t.area.toLowerCase().includes(search);
+                const matchArea = area === "" || t.area === area;
+                const matchCat = category === "" || t.specialization.includes(category);
+                const matchHv = homevisit === "" || (homevisit === "yes" && t.homeVisit);
+                return matchSearch && matchArea && matchCat && matchHv;
+            });
+
+            const grid = document.getElementById('tailors-directory-grid');
+            if (grid) {
+                grid.innerHTML = filtered.length > 0 ? filtered.map(t => createTailorCardHTML(t)).join('') : `<div style="grid-column: 1/-1; text-align:center; padding:3rem; color:var(--text-muted);">No tailors found matching your filter criteria.</div>`;
+            }
+        }
+
+        function toggleFavorite(tailorId) {
+            let favs = getStorage('favorites', []);
+            if (favs.includes(tailorId)) {
+                favs = favs.filter(id => id !== tailorId);
+                showToast("Removed from favourite tailors");
+            } else {
+                favs.push(tailorId);
+                showToast("Added to favourite tailors ❤️");
+            }
+            setStorage('favorites', favs);
+            renderTailorsDirectory();
+            renderHomeContent();
+        }
+
+        /* TAILOR PROFILE MODAL */
+        function openTailorProfile(tailorId) {
+            const tailors = getStorage('tailorx_tailors_data', demoTailors);
+            const t = tailors.find(x => x.id === tailorId);
+            if (!t) return;
+
+            let priceTableHTML = Object.entries(t.prices).map(([item, price]) => `
+                <tr><td>${escapeHTML(item)}</td><td style="font-weight:600; color:var(--primary);">₹${price}</td></tr>
+            `).join('');
+
+            const contentEl = document.getElementById('tailor-profile-modal-content');
+            if (contentEl) {
+                contentEl.innerHTML = `
+                    <div style="display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap; margin-bottom: 2rem;">
+                        <img src="${escapeHTML(t.photo)}" style="width: 150px; height: 150px; object-fit: cover; border-radius: var(--radius);">
+                        <div style="flex: 1;">
+                            <span class="demo-badge" style="position:static; display:inline-block; margin-bottom:0.5rem;">Demo Profile</span>
+                            <h2>${escapeHTML(t.name)}</h2>
+                            <h4 style="color: var(--text-muted); font-weight: 500;">${escapeHTML(t.shopName)}</h4>
+                            <p style="font-size: 0.9rem; margin-top: 0.5rem; color: var(--text-muted);">${escapeHTML(t.bio)}</p>
+                            <div style="display: flex; gap: 1.5rem; margin-top: 1rem; font-size: 0.9rem;">
+                                <span><i class="fa-solid fa-star" style="color:#f59e0b"></i> ${t.rating} (${t.reviewsCount} reviews)</span>
+                                <span><i class="fa-solid fa-scissors" style="color:var(--primary)"></i> ${t.completedOrders} orders</span>
+                                <span><i class="fa-solid fa-location-dot"></i> ${escapeHTML(t.area)}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 style="margin-bottom: 1rem; font-size: 1.2rem;">Tailor Stitching Price List</h3>
+                    <table style="margin-bottom: 2rem;">
+                        <thead><tr><th>Garment Type</th><th>Stitching Rate</th></tr></thead>
+                        <tbody>${priceTableHTML}</tbody>
+                    </table>
+
+                    <div style="display: flex; gap: 1rem;">
+                        <button class="btn btn-primary" style="flex: 1; justify-content: center;" onclick="closeModal('tailor-profile-modal'); openBookingModalForTailor('${t.id}')">Book Tailor Now</button>
+                        <button class="btn btn-outline" style="flex: 1; justify-content: center;" onclick="closeModal('tailor-profile-modal'); openChatModal('${t.id}', '${escapeHTML(t.name)}')">Chat with Tailor</button>
+                    </div>
+                `;
+            }
+            openModal('tailor-profile-modal');
+        }
+
+        /* CLOTHES DESIGNER */
+        function updateGarmentPreview() {
+            const garment = document.getElementById('designer-garment').value;
+            const fabric = document.getElementById('designer-fabric').value;
+            const color = document.getElementById('designer-color').value;
+            const collar = document.getElementById('designer-collar').value;
+            const sleeve = document.getElementById('designer-sleeve').value;
+
+            const titleEl = document.getElementById('preview-title');
+            const descEl = document.getElementById('preview-desc');
+            const garmentBox = document.getElementById('garment-preview-box');
+            const iconEl = document.getElementById('preview-icon');
+
+            if (titleEl) titleEl.innerText = garment + " Preview";
+            if (descEl) descEl.innerText = `${fabric} • ${collar} • ${sleeve}`;
+            
+            if (garmentBox) {
+                garmentBox.style.backgroundColor = color;
+                const isDark = (color === '#1A1A1A' || color === '#121A2B' || color === '#800020' || color === '#2E8B57');
+                garmentBox.style.color = isDark ? '#FFFFFF' : '#1A1A1A';
+                if (titleEl) titleEl.style.color = garmentBox.style.color;
+                if (descEl) descEl.style.color = isDark ? '#e0e0e0' : '#555';
+                if (iconEl) iconEl.style.color = garmentBox.style.color;
+            }
+        }
+
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const box = document.getElementById('garment-preview-box');
+                    if (box) {
+                        box.style.backgroundImage = `url(${e.target.result})`;
+                        box.style.backgroundSize = 'cover';
+                    }
+                    showToast("Reference inspiration image uploaded successfully!");
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function saveCurrentDesign() {
+            const garmentEl = document.getElementById('designer-garment');
+            const fabricEl = document.getElementById('designer-fabric');
+            const colorEl = document.getElementById('designer-color');
+            const collarEl = document.getElementById('designer-collar');
+            const sleeveEl = document.getElementById('designer-sleeve');
+            const fitEl = document.getElementById('designer-fit');
+
+            const design = {
+                id: "d_" + Date.now(),
+                title: (garmentEl ? garmentEl.value : "Kurta") + " Design",
+                garment: garmentEl ? garmentEl.value : "Kurta",
+                fabric: fabricEl ? fabricEl.value : "Fine Cotton",
+                color: colorEl ? colorEl.value : "#C5A880",
+                collar: collarEl ? collarEl.value : "Mandarin Collar",
+                sleeve: sleeveEl ? sleeveEl.value : "Full Sleeve",
+                fit: fitEl ? fitEl.value : "Tailored Slim Fit"
+            };
+            let designs = getStorage('designs', []);
+            designs.push(design);
+            setStorage('designs', designs);
+            showToast("Design saved to your profile successfully!");
+        }
+
+        function proceedToBookingWithDesign() {
+            saveCurrentDesign();
+            openBookingModalForTailor();
+        }
+
+        /* PRICE COMPARISON */
+        function renderPriceComparisonTable() {
+            const garmentSelect = document.getElementById('compare-garment-select');
+            const garment = garmentSelect ? garmentSelect.value : "Kurta";
+            const tailors = getStorage('tailorx_tailors_data', demoTailors);
+            
+            const tbody = document.getElementById('price-comparison-tbody');
+            if (tbody) {
+                tbody.innerHTML = tailors.map(t => {
+                    const price = t.prices[garment] || 500;
+                    return `
+                        <tr>
+                            <td>
+                                <div style="font-weight:600; color:var(--accent-dark);">${escapeHTML(t.name)}</div>
+                                <div style="font-size:0.8rem; color:var(--text-muted);">${escapeHTML(t.shopName)} (${escapeHTML(t.area)})</div>
+                            </td>
+                            <td>${escapeHTML(t.specialization)}</td>
+                            <td style="font-weight:700; color:var(--primary); font-size:1.05rem;">₹${price}</td>
+                            <td><i class="fa-solid fa-star" style="color:#f59e0b"></i> ${t.rating}</td>
+                            <td>${t.homeVisit ? '<span style="color:var(--success); font-weight:600;">Yes</span>' : '<span style="color:var(--text-muted);">No</span>'}</td>
+                            <td>
+                                <button class="btn btn-primary" style="font-size:0.75rem; padding:0.3rem 0.6rem;" onclick="openBookingModalForTailor('${t.id}')">Book</button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+        }
+
+        /* BOOKING FLOW (9 Steps) */
+        function openBookingModalForTailor(tailorId = null) {
+            const user = getStorage('logged_customer', null);
+            if (!user) {
+                showToast("Please login or signup first to book a tailor.");
+                openLoginModal();
+                return;
+            }
+            const tailors = getStorage('tailorx_tailors_data', demoTailors);
+            activeBookingData = {
+                tailorId: tailorId || tailors[0].id,
+                clothing: document.getElementById('designer-garment') ? document.getElementById('designer-garment').value : "Kurta",
+                design: { fabric: "Fine Cotton", color: "#C5A880", collar: "Mandarin Collar" },
+                measurementProfile: "Myself",
+                visitType: "Home Visit",
+                date: new Date().toISOString().split('T')[0],
+                time: "11:00 AM",
+                address: (user.address || "Hazratganj") + ", " + (user.area || "Lucknow"),
+                totalAmount: 900
+            };
+            renderBookingStep(1);
+            openModal('booking-modal');
+        }
+
+        function renderBookingStep(stepNum) {
+            const container = document.getElementById('booking-steps-container');
+            if (!container) return;
+            const tailors = getStorage('tailorx_tailors_data', demoTailors);
+            const currentTailor = tailors.find(t => t.id === activeBookingData.tailorId) || tailors[0];
+            const measurements = getStorage('measurements', []);
+            const designs = getStorage('designs', []);
+
+            let html = `<div style="font-size:0.8rem; font-weight:600; color:var(--primary); margin-bottom:1rem;">STEP ${stepNum} OF 9</div>`;
+
+            if (stepNum === 1) {
+                html += `
+                    <h3 style="margin-bottom:1rem;">Select Clothing Category</h3>
+                    <div class="form-group">
+                        <select id="book-garment-input">
+                            <option value="Kurta" ${activeBookingData.clothing==='Kurta'?'selected':''}>Kurta (Base ₹${currentTailor.prices['Kurta']||500})</option>
+                            <option value="Shirt" ${activeBookingData.clothing==='Shirt'?'selected':''}>Shirt (Base ₹${currentTailor.prices['Shirt']||400})</option>
+                            <option value="Pant" ${activeBookingData.clothing==='Pant'?'selected':''}>Pant (Base ₹${currentTailor.prices['Pant']||450})</option>
+                            <option value="Suit" ${activeBookingData.clothing==='Suit'?'selected':''}>Suit (Base ₹${currentTailor.prices['Suit']||1500})</option>
+                            <option value="Lehenga" ${activeBookingData.clothing==='Lehenga'?'selected':''}>Lehenga (Base ₹${currentTailor.prices['Lehenga']||2000})</option>
+                            <option value="Blouse" ${activeBookingData.clothing==='Blouse'?'selected':''}>Blouse (Base ₹${currentTailor.prices['Blouse']||600})</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="activeBookingData.clothing=document.getElementById('book-garment-input').value; renderBookingStep(2)">Next: Select Tailor</button>
+                `;
+            } else if (stepNum === 2) {
+                html += `
+                    <h3 style="margin-bottom:1rem;">Select Tailor</h3>
+                    <div class="form-group">
+                        <select id="book-tailor-input">
+                            ${tailors.map(t => `<option value="${t.id}" ${t.id===activeBookingData.tailorId?'selected':''}>${escapeHTML(t.name)} — ${escapeHTML(t.shopName)} (${escapeHTML(t.area)})</option>`).join('')}
+                        </select>
+                    </div>
+                    <div style="display:flex; gap:1rem;">
+                        <button class="btn btn-outline" style="flex:1; justify-content:center;" onclick="renderBookingStep(1)">Back</button>
+                        <button class="btn btn-primary" style="flex:1; justify-content:center;" onclick="activeBookingData.tailorId=document.getElementById('book-tailor-input').value; renderBookingStep(3)">Next: Select Design</button>
+                    </div>
+                `;
+            } else if (stepNum === 3) {
+                html += `
+                    <h3 style="margin-bottom:1rem;">Select Design & Customization</h3>
+                    <div class="form-group">
+                        <label>Saved Designs</label>
+                        <select id="book-design-select">
+                            ${designs.map(d => `<option value="${d.title}">${escapeHTML(d.title)} (${escapeHTML(d.fabric)}, ${escapeHTML(d.color)})</option>`).join('')}
+                            <option value="Default Standard">Default Standard Design</option>
+                        </select>
+                    </div>
+                    <div style="display:flex; gap:1rem;">
+                        <button class="btn btn-outline" style="flex:1; justify-content:center;" onclick="renderBookingStep(2)">Back</button>
+                        <button class="btn btn-primary" style="flex:1; justify-content:center;" onclick="renderBookingStep(4)">Next: Measurements</button>
+                    </div>
+                `;
+            } else if (stepNum === 4) {
+                html += `
+                    <h3 style="margin-bottom:1rem;">Select Measurement Profile</h3>
+                    <div class="form-group">
+                        <select id="book-measure-input">
+                            ${measurements.map(m => `<option value="${m.profileName}">${escapeHTML(m.profileName)} (Chest: ${m.chest}&quot;, Waist: ${m.waist}&quot;)</option>`).join('')}
+                        </select>
+                    </div>
+                    <div style="display:flex; gap:1rem;">
+                        <button class="btn btn-outline" style="flex:1; justify-content:center;" onclick="renderBookingStep(3)">Back</button>
+                        <button class="btn btn-primary" style="flex:1; justify-content:center;" onclick="activeBookingData.measurementProfile=document.getElementById('book-measure-input').value; renderBookingStep(5)">Next: Visit Type</button>
+                    </div>
+                `;
+            } else if (stepNum === 5) {
+                html += `
+                    <h3 style="margin-bottom:1rem;">Choose Home Visit or Shop Visit</h3>
+                    <div class="form-group">
+                        <select id="book-visittype-input">
+                            <option value="Home Visit" ${activeBookingData.visitType==='Home Visit'?'selected':''}>Home Visit (Tailor visits you for measurements +₹100)</option>
+                            <option value="Shop Visit" ${activeBookingData.visitType==='Shop Visit'?'selected':''}>Shop Visit (Visit tailor shop directly)</option>
+                        </select>
+                    </div>
+                    <div style="display:flex; gap:1rem;">
+                        <button class="btn btn-outline" style="flex:1; justify-content:center;" onclick="renderBookingStep(4)">Back</button>
+                        <button class="btn btn-primary" style="flex:1; justify-content:center;" onclick="activeBookingData.visitType=document.getElementById('book-visittype-input').value; renderBookingStep(6)">Next: Date & Time</button>
+                    </div>
+                `;
+            } else if (stepNum === 6) {
+                html += `
+                    <h3 style="margin-bottom:1rem;">Select Appointment Date & Time</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="date" id="book-date-input" value="${activeBookingData.date}">
+                        </div>
+                        <div class="form-group">
+                            <label>Time Slot</label>
+                            <select id="book-time-input">
+                                <option value="10:00 AM">10:00 AM</option>
+                                <option value="11:30 AM">11:30 AM</option>
+                                <option value="02:00 PM">02:00 PM</option>
+                                <option value="04:30 PM">04:30 PM</option>
+                                <option value="06:00 PM">06:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:1rem;">
+                        <button class="btn btn-outline" style="flex:1; justify-content:center;" onclick="renderBookingStep(5)">Back</button>
+                        <button class="btn btn-primary" style="flex:1; justify-content:center;" onclick="activeBookingData.date=document.getElementById('book-date-input').value; activeBookingData.time=document.getElementById('book-time-input').value; renderBookingStep(7)">Next: Price Calculator</button>
+                    </div>
+                `;
+            } else if (stepNum === 7) {
+                const base = currentTailor.prices[activeBookingData.clothing] || 500;
+                const total = base + (activeBookingData.visitType === 'Home Visit' ? 100 : 0) + 100;
+                activeBookingData.totalAmount = total;
+                html += `
+                    <h3 style="margin-bottom:1rem;">Dynamic Tailor Price Calculator</h3>
+                    <div style="background:var(--surface-alt); padding:1rem; border-radius:var(--radius); margin-bottom:1.5rem; font-size:0.9rem;">
+                        <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;"><span>Base Stitching (${escapeHTML(activeBookingData.clothing)}):</span> <span>₹${base}</span></div>
+                        <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;"><span>Home Visit Fee:</span> <span>${activeBookingData.visitType==='Home Visit'?'₹100':'₹0'}</span></div>
+                        <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;"><span>Premium Finishing Options:</span> <span>+₹100</span></div>
+                        <hr style="border:0; border-top:1px solid var(--border-color); margin:0.5rem 0;">
+                        <div style="display:flex; justify-content:space-between; font-weight:700; font-size:1.1rem; color:var(--accent-dark);"><span>Estimated Total:</span> <span>₹${total}</span></div>
+                    </div>
+                    <div style="display:flex; gap:1rem;">
+                        <button class="btn btn-outline" style="flex:1; justify-content:center;" onclick="renderBookingStep(6)">Back</button>
+                        <button class="btn btn-primary" style="flex:1; justify-content:center;" onclick="renderBookingStep(8)">Next: Review & Payment</button>
+                    </div>
+                `;
+            } else if (stepNum === 8) {
+                html += `
+                    <h3 style="margin-bottom:1rem;">Review Order & Demo Payment</h3>
+                    <div style="background:var(--surface-alt); padding:1rem; border-radius:var(--radius); margin-bottom:1.5rem; font-size:0.9rem; display:flex; flex-direction:column; gap:0.5rem;">
+                        <div><strong>Tailor:</strong> ${escapeHTML(currentTailor.name)} (${escapeHTML(currentTailor.shopName)})</div>
+                        <div><strong>Garment:</strong> ${escapeHTML(activeBookingData.clothing)}</div>
+                        <div><strong>Measurement Profile:</strong> ${escapeHTML(activeBookingData.measurementProfile)}</div>
+                        <div><strong>Visit Type:</strong> ${escapeHTML(activeBookingData.visitType)} (${escapeHTML(activeBookingData.date)} at ${escapeHTML(activeBookingData.time)})</div>
+                        <div><strong>Total Amount:</strong> ₹${activeBookingData.totalAmount} (Demo Online Payment / COD)</div>
+                    </div>
+                    <div style="display:flex; gap:1rem;">
+                        <button class="btn btn-outline" style="flex:1; justify-content:center;" onclick="renderBookingStep(7)">Back</button>
+                        <button class="btn btn-gold" style="flex:1; justify-content:center;" onclick="finalizeBookingOrder()">Confirm & Place Order</button>
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
+        }
+
+        function finalizeBookingOrder() {
+            const tailors = getStorage('tailorx_tailors_data', demoTailors);
+            const currentTailor = tailors.find(t => t.id === activeBookingData.tailorId) || tailors[0];
+            const newOrderId = "TX" + Math.floor(1000 + Math.random() * 9000);
+
+            const newOrder = {
+                id: newOrderId,
+                tailorId: currentTailor.id,
+                tailorName: currentTailor.name,
+                shopName: currentTailor.shopName,
+                clothing: activeBookingData.clothing,
+                design: activeBookingData.design || { fabric: "Fine Cotton", color: "#C5A880", collar: "Mandarin Collar" },
+                measurementProfile: activeBookingData.measurementProfile,
+                visitType: activeBookingData.visitType,
+                date: activeBookingData.date,
+                time: activeBookingData.time,
+                address: activeBookingData.address,
+                totalAmount: activeBookingData.totalAmount,
+                statusIndex: 0,
+                statusName: "Order Placed",
+                createdAt: new Date().toISOString().split('T')[0],
+                reviewGiven: false
+            };
+
+            let orders = getStorage('orders', []);
+            orders.unshift(newOrder);
+            setStorage('orders', orders);
+
+            addNotification(`🔔 New order #${newOrderId} placed successfully with ${currentTailor.name}!`);
+            
+            const container = document.getElementById('booking-steps-container');
+            if (container) {
+                container.innerHTML = `
+                    <div style="text-align:center; padding: 2rem 0;">
+                        <i class="fa-solid fa-circle-check" style="font-size: 4rem; color: var(--success); margin-bottom: 1rem;"></i>
+                        <h3>Order Successfully Placed!</h3>
+                        <p style="color:var(--text-muted); margin: 0.5rem 0 1.5rem 0;">Your Order ID is <strong>#${newOrderId}</strong>. You can track status in My Orders.</p>
+                        <button class="btn btn-primary" onclick="closeModal('booking-modal'); switchView('orders');">View My Orders</button>
+                    </div>
+                `;
+            }
+            showToast("Order placed successfully! Order ID: " + newOrderId);
+        }
+
+        /* ORDERS & TRACKING */
+        const orderStatuses = [
+            "Order Placed",
+            "Tailor Accepted",
+            "Measurement",
+            "Cutting",
+            "Stitching",
+            "Fitting",
+            "Ready",
+            "Delivered"
+        ];
+
+        function renderCustomerOrders() {
+            const orders = getStorage('orders', []);
+            const container = document.getElementById('orders-list-container');
+            if (!container) return;
+
+            if (orders.length === 0) {
+                container.innerHTML = `<div style="text-align:center; padding:3rem; color:var(--text-muted);">No orders found. Book a tailor or design clothes to get started!</div>`;
+                return;
+            }
+
+            container.innerHTML = orders.map(ord => {
+                const currentIdx = ord.statusIndex !== undefined ? ord.statusIndex : 0;
+                let timelineHTML = orderStatuses.map((st, idx) => {
+                    let cls = "";
+                    if (idx < currentIdx) cls = "completed";
+                    else if (idx === currentIdx) cls = "active";
+                    return `
+                        <div class="timeline-step ${cls}">
+                            <div class="timeline-circle">${idx < currentIdx ? '<i class="fa-solid fa-check"></i>' : (idx + 1)}</div>
+                            <span>${st}</span>
+                        </div>
+                    `;
+                }).join('');
+
+                let reviewBtnHTML = '';
+                if (currentIdx === 7 && !ord.reviewGiven) {
+                    reviewBtnHTML = `<button class="btn btn-gold" style="font-size:0.8rem; padding:0.4rem 0.8rem;" onclick="openReviewModal('${ord.id}')"><i class="fa-solid fa-star"></i> Rate & Review</button>`;
+                } else if (ord.reviewGiven) {
+                    reviewBtnHTML = `<span style="font-size:0.85rem; color:var(--success); font-weight:600;"><i class="fa-solid fa-check"></i> Reviewed</span>`;
+                }
+
+                return `
+                    <div class="card" style="padding: 2rem; margin-bottom: 2rem;">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem; border-bottom:1px solid var(--border-color); padding-bottom:1rem;">
+                            <div>
+                                <h3 style="color:var(--accent-dark);">Order #${escapeHTML(ord.id)}</h3>
+                                <p style="font-size:0.9rem; color:var(--text-muted);">Tailor: <strong>${escapeHTML(ord.tailorName)}</strong> (${escapeHTML(ord.shopName)})</p>
+                                <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.25rem;">Garment: <strong>${escapeHTML(ord.clothing)}</strong> | Visit: ${escapeHTML(ord.visitType)} (${escapeHTML(ord.date)})</p>
+                            </div>
+                            <div style="text-align:right;">
+                                <h3 style="color:var(--primary);">₹${ord.totalAmount}</h3>
+                                <span style="font-size:0.8rem; background:var(--surface-alt); padding:0.2rem 0.6rem; border-radius:4px; font-weight:600;">Status: ${escapeHTML(orderStatuses[currentIdx])}</span>
+                            </div>
+                        </div>
+
+                        <div class="tracking-timeline">
+                            ${timelineHTML}
+                        </div>
+
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1rem; flex-wrap:wrap; gap:1rem;">
+                            <button class="btn btn-outline" style="font-size:0.8rem; padding:0.4rem 0.8rem;" onclick="openChatModal('${ord.tailorId}', '${escapeHTML(ord.tailorName)}', '${ord.id}')"><i class="fa-solid fa-comments"></i> Chat with Tailor</button>
+                            ${reviewBtnHTML}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        /* AUTHENTICATION (CUSTOMER & TAILOR) */
+        function openLoginModal() {
+            openModal('login-modal');
+        }
+
+        function handleCustomerLogin(e) {
+            e.preventDefault();
+            const name = document.getElementById('auth-name').value;
+            const mobile = document.getElementById('auth-mobile').value;
+            const email = document.getElementById('auth-email').value;
+            const area = document.getElementById('auth-area').value;
+            const address = document.getElementById('auth-address').value || "Street 1, Lucknow";
+
+            const customer = { name, mobile, email, city: "Lucknow", area, address };
+            setStorage('logged_customer', customer);
+            updateAuthNavButton();
+            closeModal('login-modal');
+            showToast("Welcome back, " + name + "!");
+            switchView('customer-dashboard');
+        }
+
+        function logoutCustomer() {
+            localStorage.removeItem('tailorx_logged_customer');
+            updateAuthNavButton();
+            showToast("Logged out successfully");
+            switchView('home');
+        }
+
+        function updateAuthNavButton() {
+            const customer = getStorage('logged_customer', null);
+            const authBtn = document.getElementById('auth-btn');
+            if (authBtn) {
+                if (customer) {
+                    authBtn.innerText = customer.name.split(' ')[0] + " (Dashboard)";
+                    authBtn.onclick = () => switchView('customer-dashboard');
+                } else {
+                    authBtn.innerText = "Login / Signup";
+                    authBtn.onclick = openLoginModal;
+                }
+            }
+        }
+
+        function openTailorLoginModal() {
+            const tailors = getStorage('tailorx_tailors_data', demoTailors);
+            const dropdown = document.getElementById('tailor-select-dropdown');
+            if (dropdown) {
+                dropdown.innerHTML = tailors.map(t => `<option value="${t.id}">${escapeHTML(t.name)} — ${escapeHTML(t.shopName)} (${escapeHTML(t.area)})</option>`).join('');
+            }
+            openModal('tailor-login-modal');
+        }
+
+        function loginAsTailor() {
+            const dropdown = document.getElementById('tailor-select-dropdown');
+            if (!dropdown) return;
+            const tailorId = dropdown.value;
+            const tailors = getStorage('tailorx_tailors_data', demoTailors);
+            const tailor = tailors.find(t => t.id === tailorId);
+            if (tailor) {
+                setStorage('logged_tailor', tailor);
+                closeModal('tailor-login-modal');
+                showToast("Logged in as tailor partner: " + tailor.shopName);
+                switchView('tailor-dashboard');
+            }
+        }
+
+        function logoutTailor() {
+            localStorage.removeItem('tailorx_logged_tailor');
+            showToast("Tailor partner logged out");
+            switchView('home');
+        }
+
+        /* CUSTOMER DASHBOARD */
+        function switchCustTab(tabName) {
+            document.querySelectorAll('.cust-tab-link').forEach(l => l.classList.remove('active'));
+            const link = document.getElementById('tab-link-' + tabName);
+            if (link) link.classList.add('active');
+            renderCustomerDashboardTab(tabName);
+        }
+
+        function renderCustomerDashboardTab(tabName) {
+            const customer = getStorage('logged_customer', { name: "Aarav Sharma", mobile: "9876543210", email: "aarav@example.com", area: "Hazratganj", address: "Flat 402" });
+            const nameEl = document.getElementById('dash-cust-name');
+            const phoneEl = document.getElementById('dash-cust-phone');
+            if (nameEl) nameEl.innerText = customer.name;
+            if (phoneEl) phoneEl.innerText = "+91 " + customer.mobile;
+
+            const areaHtml = lucknowAreas.map(a => `<option value="${a}" ${customer.area===a?'selected':''}>${a}</option>`).join('');
+            const areaSelectHtml = `<select id="cust-profile-area" style="width:100%; padding:0.75rem; border:1px solid var(--border-color); border-radius:var(--radius);">${areaHtml}</select>`;
+
+            const mainArea = document.getElementById('customer-dashboard-main-area');
+            if (!mainArea) return;
+
+            if (tabName === 'profile') {
+                mainArea.innerHTML = `
+                    <h3 style="margin-bottom:1.5rem;">Customer Profile Settings</h3>
+                    <form onsubmit="saveCustomerProfile(event)">
+                        <div class="form-row">
+                            <div class="form-group"><label>Full Name</label><input type="text" id="cust-profile-name" value="${escapeHTML(customer.name)}" required></div>
+                            <div class="form-group"><label>Mobile Number</label><input type="tel" id="cust-profile-mobile" value="${escapeHTML(customer.mobile)}" required></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><label>Email Address</label><input type="email" id="cust-profile-email" value="${escapeHTML(customer.email)}" required></div>
+                            <div class="form-group"><label>Area / Locality</label>${areaSelectHtml}</div>
+                        </div>
+                        <div class="form-group"><label>Street Address</label><textarea id="cust-profile-address" rows="2">${escapeHTML(customer.address || '')}</textarea></div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                `;
+            } else if (tabName === 'measurements') {
+                const measurements = getStorage('measurements', []);
+                mainArea.innerHTML = `
+                    <h3 style="margin-bottom:1.5rem;">My Saved Measurements</h3>
+                    <div style="display:flex; flex-direction:column; gap:1.5rem;">
+                        ${measurements.map((m, idx) => `
+                            <div style="background:var(--surface-alt); padding:1.5rem; border-radius:var(--radius);">
+                                <h4 style="margin-bottom:0.75rem; color:var(--accent-dark);">${escapeHTML(m.profileName)}</h4>
+                                <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:0.5rem; font-size:0.85rem;">
+                                    <div>Chest: <strong>${m.chest}&quot;</strong></div>
+                                    <div>Waist: <strong>${m.waist}&quot;</strong></div>
+                                    <div>Shoulder: <strong>${m.shoulder}&quot;</strong></div>
+                                    <div>Sleeve: <strong>${m.sleeve}&quot;</strong></div>
+                                    <div>Kurta Length: <strong>${m.kurtaLen}&quot;</strong></div>
+                                    <div>Neck: <strong>${m.neck}&quot;</strong></div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else if (tabName === 'designs') {
+                const designs = getStorage('designs', []);
+                mainArea.innerHTML = `
+                    <h3 style="margin-bottom:1.5rem;">My Saved Clothes Designs</h3>
+                    <div class="grid-4" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));">
+                        ${designs.map(d => `
+                            <div class="card" style="padding:1rem;">
+                                <h4 style="font-size:1rem; margin-bottom:0.5rem;">${escapeHTML(d.title)}</h4>
+                                <p style="font-size:0.8rem; color:var(--text-muted);">${escapeHTML(d.fabric)} • ${escapeHTML(d.color)}</p>
+                                <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.25rem;">Collar: ${escapeHTML(d.collar)}</p>
+                                <button class="btn btn-outline" style="font-size:0.75rem; padding:0.3rem 0.6rem; margin-top:1rem;" onclick="openBookingModalForTailor()">Book with Design</button>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else if (tabName === 'favorites') {
+                const favorites = getStorage('favorites', []);
+                const tailors = getStorage('tailorx_tailors_data', demoTailors);
+                const favTailors = tailors.filter(t => favorites.includes(t.id));
+                mainArea.innerHTML = `
+                    <h3 style="margin-bottom:1.5rem;">Favourite Tailor Partners</h3>
+                    <div class="grid-4" style="grid-template-columns: 1fr;">
+                        ${favTailors.length > 0 ? favTailors.map(t => createTailorCardHTML(t)).join('') : '<p style="color:var(--text-muted)">No favourite tailors saved yet.</p>'}
+                    </div>
+                `;
+            } else if (tabName === 'orders') {
+                switchView('orders');
+            }
+        }
+
+        function saveCustomerProfile(e) {
+            e.preventDefault();
+            const customer = {
+                name: document.getElementById('cust-profile-name').value,
+                mobile: document.getElementById('cust-profile-mobile').value,
+                email: document.getElementById('cust-profile-email').value,
+                city: "Lucknow",
+                area: document.getElementById('cust-profile-area').value,
+                address: document.getElementById('cust-profile-address').value
+            };
+            setStorage('logged_customer', customer);
+            updateAuthNavButton();
+            showToast("Profile settings saved successfully!");
+        }
+
+        /* TAILOR DASHBOARD */
+        function initTailorDashboard() {
+            const tailor = getStorage('logged_tailor', null);
+            if (!tailor) {
+                showToast("Please login as a Tailor Partner first.");
+                openTailorLoginModal();
+                switchView('home');
+                return;
+            }
+
+            const shopNameEl = document.getElementById('tailor-dash-shopname');
+            const subtitleEl = document.getElementById('tailor-dash-subtitle');
+            if (shopNameEl) shopNameEl.innerText = tailor.shopName + " Dashboard";
+            if (subtitleEl) subtitleEl.innerText = "Master Tailor: " + tailor.name + " (" + tailor.area + ")";
+
+            const orders = getStorage('orders', []).filter(o => o.tailorId === tailor.id);
+            const activeAppointments = orders.filter(o => o.statusIndex < 7);
+            const totalEarnings = orders.reduce((sum, o) => sum + (o.totalAmount || 500), 0);
+
+            const statOrders = document.getElementById('tdash-stat-orders');
+            const statAppt = document.getElementById('tdash-stat-appointments');
+            const statEarn = document.getElementById('tdash-stat-earnings');
+            const statRating = document.getElementById('tdash-stat-rating');
+
+            if (statOrders) statOrders.innerText = orders.length;
+            if (statAppt) statAppt.innerText = activeAppointments.length;
+            if (statEarn) statEarn.innerText = "₹" + totalEarnings;
+            if (statRating) statRating.innerText = tailor.rating + " ★";
+
+            const tbody = document.getElementById('tailor-dashboard-orders-tbody');
+            if (tbody) {
+                tbody.innerHTML = orders.length > 0 ? orders.map(ord => `
+                    <tr>
+                        <td>#${escapeHTML(ord.id)}</td>
+                        <td>${escapeHTML(ord.measurementProfile || 'Customer')}</td>
+                        <td>${escapeHTML(ord.clothing)} (${escapeHTML(ord.visitType)})</td>
+                        <td style="font-weight:600; color:var(--primary);">₹${ord.totalAmount}</td>
+                        <td><span style="font-weight:600;">${escapeHTML(orderStatuses[ord.statusIndex || 0])}</span></td>
+                        <td>
+                            <select onchange="updateOrderStatus('${ord.id}', parseInt(this.value))" style="padding:0.4rem; font-size:0.85rem;">
+                                ${orderStatuses.map((st, idx) => `<option value="${idx}" ${ord.statusIndex===idx?'selected':''}>${st}</option>`).join('')}
+                            </select>
+                        </td>
+                    </tr>
+                `).join('') : `<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">No orders assigned to your shop yet.</td></tr>`;
+            }
+
+            const priceEditor = document.getElementById('tailor-pricelist-editor');
+            if (priceEditor) {
+                priceEditor.innerHTML = `
+                    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem;">
+                        ${Object.entries(tailor.prices).map(([item, price]) => `
+                            <div style="background:var(--surface-alt); padding:1rem; border-radius:var(--radius);">
+                                <label style="font-weight:600; margin-bottom:0.25rem;">${escapeHTML(item)} (₹)</label>
+                                <input type="number" value="${price}" onchange="updateTailorPrice('${tailor.id}', '${item}', this.value)">
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+        }
+
+        function updateOrderStatus(orderId, newStatusIdx) {
+            let orders = getStorage('orders', []);
+            let targetOrder = orders.find(o => o.id === orderId);
+            if (targetOrder) {
+                targetOrder.statusIndex = newStatusIdx;
+                targetOrder.statusName = orderStatuses[newStatusIdx];
+                setStorage('orders', orders);
+                addNotification(`🔔 Order #${orderId} status updated to: ${orderStatuses[newStatusIdx]}`);
+                showToast("Order status updated successfully!");
+                initTailorDashboard();
+            }
+        }
+
+        function updateTailorPrice(tailorId, garment, newPrice) {
+            let tailors = getStorage('tailorx_tailors_data', demoTailors);
+            let tailor = tailors.find(t => t.id === tailorId);
+            if (tailor) {
+                tailor.prices[garment] = Number(newPrice);
+                setStorage('tailorx_tailors_data', tailors);
+                const loggedTailor = getStorage('logged_tailor', null);
+                if (loggedTailor && loggedTailor.id === tailorId) {
+                    setStorage('logged_tailor', tailor);
+                }
+                showToast(`Updated ${garment} price to ₹${newPrice}`);
+                renderPriceComparisonTable();
+            }
+        }
+
+        /* ADMIN DASHBOARD */
+        function initAdminDashboard() {
+            const tailors = getStorage('tailorx_tailors_data', demoTailors);
+            const orders = getStorage('orders', []);
+            const totalRev = orders.reduce((sum, o) => sum + (o.totalAmount || 500), 0);
+
+            const adashTailors = document.getElementById('adash-tailors');
+            const adashOrders = document.getElementById('adash-orders');
+            const adashRevenue = document.getElementById('adash-revenue');
+
+            if (adashTailors) adashTailors.innerText = tailors.length;
+            if (adashOrders) adashOrders.innerText = orders.length;
+            if (adashRevenue) adashRevenue.innerText = "₹" + totalRev.toLocaleString('en-IN');
+
+            const tbody = document.getElementById('admin-tailors-tbody');
+            if (tbody) {
+                tbody.innerHTML = tailors.map(t => `
+                    <tr>
+                        <td>${escapeHTML(t.name)}</td>
+                        <td>${escapeHTML(t.shopName)}</td>
+                        <td>${escapeHTML(t.area)}</td>
+                        <td><span style="color:var(--success); font-weight:600;">Active Partner</span></td>
+                        <td><button class="btn btn-outline" style="font-size:0.75rem; padding:0.3rem 0.6rem;" onclick="showToast('Partner verified & active')">Manage</button></td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        /* CHAT SYSTEM */
+        function openChatModal(tailorId, tailorName, orderId = null) {
+            activeChatOrderOrTailorId = orderId || "general_" + tailorId;
+            const nameEl = document.getElementById('chat-tailor-name');
+            const letterEl = document.getElementById('chat-avatar-letter');
+            if (nameEl) nameEl.innerText = tailorName;
+            if (letterEl) letterEl.innerText = tailorName.charAt(0);
+
+            renderChatMessages();
+            openModal('chat-modal');
+        }
+
+        function renderChatMessages() {
+            let chats = getStorage('chats', {});
+            let msgs = chats[activeChatOrderOrTailorId] || [
+                { sender: "tailor", text: "Hello! Welcome to Tailor.x chat. How can I assist you with your garment?" }
+            ];
+
+            const box = document.getElementById('chat-messages-box');
+            if (box) {
+                box.innerHTML = msgs.map(m => `
+                    <div class="chat-msg ${m.sender}">
+                        ${escapeHTML(m.text)}
+                    </div>
+                `).join('');
+                box.scrollTop = box.scrollHeight;
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chat-input-field');
+            if (!input || !input.value.trim()) return;
+            const text = input.value.trim();
+            input.value = "";
+
+            let chats = getStorage('chats', {});
+            if (!chats[activeChatOrderOrTailorId]) chats[activeChatOrderOrTailorId] = [];
+            chats[activeChatOrderOrTailorId].push({ sender: "customer", text });
+
+            setStorage('chats', chats);
+            renderChatMessages();
+
+            setTimeout(() => {
+                let currentChats = getStorage('chats', {});
+                currentChats[activeChatOrderOrTailorId].push({ sender: "tailor", text: "Thank you for your message. We have noted your request!" });
+                setStorage('chats', currentChats);
+                renderChatMessages();
+            }, 1000);
+        }
+
+        /* REVIEWS SYSTEM */
+        function openReviewModal(orderId) {
+            activeReviewOrderId = orderId;
+            const revIdEl = document.getElementById('review-order-id');
+            if (revIdEl) revIdEl.innerText = orderId;
+            openModal('review-modal');
+        }
+
+        function setRatingStars(count) {
+            const picker = document.getElementById('star-rating-picker');
+            const hiddenInput = document.getElementById('selected-star-count');
+            if (hiddenInput) hiddenInput.value = count;
+            if (picker) {
+                picker.innerHTML = Array.from({length: 5}, (_, i) => `
+                    <i class="fa-${i < count ? 'solid' : 'regular'} fa-star" onclick="setRatingStars(${i+1})"></i>
+                `).join('');
+            }
+        }
+
+        function submitCustomerReview() {
+            const text = document.getElementById('review-text-input').value;
+            const stars = document.getElementById('selected-star-count').value;
+
+            let orders = getStorage('orders', []);
+            let ord = orders.find(o => o.id === activeReviewOrderId);
+            if (ord) {
+                ord.reviewGiven = true;
+                setStorage('orders', orders);
+            }
+
+            closeModal('review-modal');
+            showToast(`Thank you! Your ${stars}-star review has been submitted.`);
+            renderCustomerOrders();
+        }
+
+        /* NOTIFICATIONS SYSTEM */
+        function addNotification(text) {
+            let notifs = getStorage('notifications', []);
+            notifs.unshift({ text, time: "Just now", read: false });
+            setStorage('notifications', notifs);
+            updateNotificationBadge();
+        }
+
+        function toggleNotifications() {
+            let notifs = getStorage('notifications', []);
+            notifs.forEach(n => n.read = true);
+            setStorage('notifications', notifs);
+            updateNotificationBadge();
+
+            const box = document.getElementById('notifications-list-box');
+            if (box) {
+                box.innerHTML = notifs.length > 0 ? notifs.map(n => `
+                    <div style="background:var(--surface-alt); padding:0.75rem; border-radius:var(--radius); font-size:0.85rem;">
+                        <div>${escapeHTML(n.text)}</div>
+                        <div style="font-size:0.7rem; color:var(--text-muted); margin-top:0.25rem;">${escapeHTML(n.time)}</div>
+                    </div>
+                `).join('') : '<p style="color:var(--text-muted); text-align:center;">No new notifications.</p>';
+            }
+            openModal('notifications-modal');
+        }
+
+        function clearAllNotifications() {
+            setStorage('notifications', []);
+            updateNotificationBadge();
+            const box = document.getElementById('notifications-list-box');
+            if (box) box.innerHTML = '<p style="color:var(--text-muted); text-align:center;">No notifications.</p>';
+            showToast("Cleared all notifications");
+        }
+
+        function updateNotificationBadge() {
+            let notifs = getStorage('notifications', []);
+            let unread = notifs.filter(n => !n.read).length;
+            const badge = document.getElementById('notif-badge');
+            if (badge) {
+                if (unread > 0) {
+                    badge.innerText = unread;
+                    badge.style.display = 'flex';
+                } else {
+                    badge.style.display = 'none';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
